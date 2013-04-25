@@ -15,7 +15,9 @@ Below is the structure of the plugin system:
 
 When the plugin system is initialized (by calling ```plugins.registry.find_plugins()```), it will search the plugins directory.  It will then store the plugins based on class, then by name.  So if you have a HTML report generator plugin, the structure will look like this:
 
-```plugins/reports/html/html.py```
+```
+plugins/reports/html/html.py
+```
 
 The registry will save the plugin as _PLUGINS["reports"]["html"], and you can use ```get_pugin()``` in BasePlugin (see: plugins/bases/plugin.py) to retrieve the plugin.
 
