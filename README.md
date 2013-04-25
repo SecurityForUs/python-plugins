@@ -37,9 +37,10 @@ How To Use Plugins
 This system was designed to make it easy to use plugins.  Howeve, first the plugins have to be loaded, which can be done by calling ```find_plugins()``` like this:
 
 ```python
-from plugins.registry import find_plugins
+from plugins.bases.registry import find_plugins
 
 if __name__ == "__main__":
+	# You don't need to assign it, but might help in debugging
 	plugins = find_plugins()
 ```
 
