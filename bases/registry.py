@@ -16,7 +16,7 @@ self.email = self._PLUGINS["tasks"]["SendEmail"]
 _PLUGINS = {
 }
 
-# Reserved ames we skip over when checking for a valid plugin
+# Reserved names we skip over when checking for a valid plugin
 _RESERVED = {
 	"files" : ["__init__", "base", "register"]
 }
