@@ -42,10 +42,16 @@ class PluginRegistry(type):
 					# Plugin hasn't been loaded into the class, so we initialize the data and store things
 					if not name in _PLUGINS[plugin_class]:
 						print "> Discovered new",plugin_class,"plugin:",name
-						
 						fn,_ = os.path.splitext(file_)
-						ref = cls()
+
+						# Sometimes it causes issues to store cls(), so we must just store the class reference itself, unitialized
+						ref = cls if "STORE_UNREF" in attrs and attrs['STORE_UNREF'] == True else cls()
+
 						_PLUGINS[plugin_class][name] = {'ref' : ref, 'loader' : fn, 'dir' : dir_ }
+
+						# If we are to store the class' attributes for whatever reason, do so as well
+						if "STORE_ATTRS" in attrs and attrs["STORE_ATTRS"] == True:
+							_PLUGINS[plugin_class][name]['attrs'] = attrs
 					else:
 						# This should never really be reached, but if so, it happens
 						raise BaseException("Plugin \"%s\" was already found in class \"%s\"" % (name, cls.plugin_class))
@@ -88,3 +94,9 @@ def find_plugins(dir_="./plugins", load=True):
 							imp.load_module(fn, *info)
 
 	return _PLUGINS
+
+def get_plugin_ref(type_, name_):
+	return _PLUGINS[type_][name_]['ref']
+
+def get_plugins_of_type(type_):
+	return _PLUGINS[type_] if type_ in _PLUGINS else None
